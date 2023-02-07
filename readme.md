@@ -9,23 +9,40 @@ Pour les étudiants de BTS SIO + B2 MDS
 
 Coder les classes PHP permettant de gérer un RPG comme suit : 
 
-- Personnages
-    - pseudo
-    - point de vie
-    - defense
-    - attaque
-- Armes
-    - degat
-    - durabilité
-- Bouclier
-    - defense
-    - durabilité
-- Montures
-    - bonus_degat
-    - bonus_defense
-- Ennemis
-    - nom
-    - point de vie
-    - defense
-    - attaque
-    - boss
+- Character
+    - attributes
+        - name
+        - lifePoints
+        - defense
+        - attack
+    - methods
+        - attack(Ennemy)
+        - defense(Ennemy)
+        - mount(Mount)
+        - getWeapon(Weapon)
+        - getShield(Shield)
+- Weapon
+    - attributes
+        - damage
+        - sustainability
+- Shield
+    - attributes
+        - defense
+        - sustainability
+- Mount
+    - attributes
+        - damageBonus
+        - defenseBonus
+- Ennemy
+    - attributes
+        - name
+        - lifepoints
+        - attack
+        - defense
+        - boss
+    - methods
+        - attack(Character)
+        - defense(Character)
+        - mount(Mount)
+        - getWeapon(Weapon)
+        - getShield(Shield)
