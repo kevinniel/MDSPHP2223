@@ -72,3 +72,11 @@ foreach($cases as $key => $value) {
     echo("key : " . $key . " value : " . $value);
 }
 
+function dd($datas) {
+    echo("<br>");
+    echo("<pre>");
+    echo("<code>");
+    var_dump($datas);
+    echo("</code>");
+    echo("</pre>");
+}
