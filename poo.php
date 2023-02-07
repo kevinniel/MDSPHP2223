@@ -9,46 +9,103 @@ function dd($datas) {
     echo("</pre>");
 }
 
-// $carre = [
-//     "longueur_cote" => 3,
-//     "nombre_cote" => 4,
-// ];
-
-// dd($carre);
-
-// function aire_carre($c) {
-//     $a = $c["longueur_cote"] * $c["longueur_cote"];
-//     return $a;
-// }
-
-// $r = aire_carre($carre);
-
-// dd( aire_carre($carre) );
-
-
-class Carre {
+class Square {
     // variable ==> attribut
-    public $longueur_cote;
-    public $nombre_cote;
-    public $perimetre;
+    public $width;
+    public $sides;
+    public $perimeter;
+    public $area;
 
-    public function __construct($longueur_cote, $nombre_cote = 4)
+    public function __construct($width, $sides = 4, $calculate = true)
     {
-        $this->longueur_cote = $longueur_cote;
-        $this->nombre_cote = $nombre_cote;
-        $this->perimetre = $this->perimetre();
+        $this->width = $width;
+        $this->sides = $sides;
+        if($calculate) {
+            $this->perimeter = $this->perimeter();
+            $this->area = $this->area();
+        }
     }
 
     // fonction ==> méthode
-    public function aire_carre() {
-        return $this->longueur_cote * $this->longueur_cote;
+    public function area_carre() {
+        return $this->width * $this->width;
     }
 
-    public function perimetre() {
-        return $this->longueur_cote * $this->nombre_cote;
+    public function perimeter() {
+        return $this->width * $this->sides;
+    }
+
+    public function area()
+    {
+        return $this->width * 2;
     }
 
 }
 
-$c = new Carre(10);
-dd($c);
+// $c = new Square(3);
+// dd($c);
+
+class Rectangle extends Square {
+
+    public $height;
+    
+    public function __construct($width, $height, $sides = 4)
+    {
+        parent::__construct($width, $sides, false);
+        $this->height = $height;
+        $this->perimeter = $this->perimeter();
+        $this->area = $this->area();
+    }
+    
+    public function area()
+    {
+        return $this->height * $this->width;
+    }
+
+    public function perimeter()
+    {
+        return ($this->width + $this->height) * 2;
+    }
+}
+
+// $r = new Rectangle(2, 5);
+// dd($r);
+
+// public / protégé / privé ===> visibilité
+
+class A {
+    public $public = 1;
+    protected $protected = 2;
+    private $private = 3;
+}
+
+$a = new A();
+dd($a);
+
+// dd($a->public); ===> OK
+// dd($a->protected); ===> KO
+// dd($a->private); ===> KO
+
+class B extends A {
+    public function __construct(){
+        dd($this->public);
+        dd($this->protected);
+        dd($this->private);
+    }
+}
+
+
+
+
+
+
+$b = new B();
+dd($b);
+
+
+
+
+
+
+
+
