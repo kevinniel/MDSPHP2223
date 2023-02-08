@@ -46,3 +46,13 @@ Coder les classes PHP permettant de gérer un RPG comme suit :
         - mount(Mount)
         - getWeapon(Weapon)
         - getShield(Shield)
+
+
+
+## TP 2
+
+rendre fonctionnelle la page todo.php
+
+En bonus :
+1. Lors de la suppression d'une ligne, une modale de confirmation doit apparaître. (Pas d'alert JS)
+2. Lors du clic sur le bouton "modifier", la LIGNE du tableau correspondante doit se transformer grâce à Javascript en formulaire. Les boutons "modifier et supprimer" disparaissent au profit de boutons "confirmer" ou "annuler"

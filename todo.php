@@ -1,15 +1,36 @@
 <?php
+    function dd($datas) {
+        echo("<br>");
+        echo("<pre>");
+        echo("<code>");
+        var_dump($datas);
+        echo("</code>");
+        echo("</pre>");
+    }
+
+    // Connexion BDD
     $dbhost = 'localhost:8889';
     $dbuser = 'testphp';
     $dbpass = 'testphp';
-    $mysqli = new mysqli($dbhost, $dbuser, $dbpass);
-
+    $dbname = "test";
+    $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
     if($mysqli->connect_errno ) {
         printf("Connect failed: %s<br />", $mysqli->connect_error);
         exit();
     }
-    printf('Connected successfully.<br />');
+    
+    // requete pour tableau
+    $sql = "SELECT * FROM todos";
+    $result = $mysqli->query($sql);
+
+    // Fermeture connexion BDD
     $mysqli->close();
+
+    // Traitement du formulaire
+    // = vérification des données
+    // = insertion en BDD
+    dd($_REQUEST);
+
 ?>
 
 
@@ -30,7 +51,8 @@
     <h1>Todo List</h1>
     <hr>
     <h2>Formulaire d'ajout</h2>
-    <form action="">
+    <!-- action => page de destination -->
+    <form action="" method="POST">
         <div class="row-form">
             <label for="name">Nom : </label>
             <input type="text" name="name" id="name">
@@ -73,10 +95,31 @@
                 <th>Etat</th>
                 <th>utilisateur</th>
                 <th>deadline</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
+            <?php
+            
+                // mysqli_free_result($result);
+            ?>
 
+            <?php if ($result->num_rows > 0): ?>
+                <?php while($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo($row["id"]); ?></td>
+                        <td><?php echo($row["name"]); ?></td>
+                        <td><?php echo($row["description"]); ?></td>
+                        <td><?php echo($row["state"]); ?></td>
+                        <td><?php echo($row["username"]); ?></td>
+                        <td><?php echo($row["deadline"]); ?></td>
+                        <td>
+                            <button>Modifier</button>
+                            <button>Supprimer</button>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </body>
