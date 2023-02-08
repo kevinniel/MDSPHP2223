@@ -1,4 +1,18 @@
-<!-- ustilisateur BDD : testphp | testphp -->
+<?php
+    $dbhost = 'localhost:8889';
+    $dbuser = 'testphp';
+    $dbpass = 'testphp';
+    $mysqli = new mysqli($dbhost, $dbuser, $dbpass);
+
+    if($mysqli->connect_errno ) {
+        printf("Connect failed: %s<br />", $mysqli->connect_error);
+        exit();
+    }
+    printf('Connected successfully.<br />');
+    $mysqli->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +57,9 @@
         <div class="row-form">
             <label for="deadline">Deadline : </label>
             <input type="date" name="deadline" id="deadline">
+        </div>
+        <div class="row-form">
+            <input type="submit" value="Envoyer !">
         </div>
     </form>
     <hr>
