@@ -1,38 +1,7 @@
 <?php
-    function dd($datas) {
-        echo("<br>");
-        echo("<pre>");
-        echo("<code>");
-        var_dump($datas);
-        echo("</code>");
-        echo("</pre>");
-    }
-
-    // Connexion BDD
-    $dbhost = 'localhost:8889';
-    $dbuser = 'testphp';
-    $dbpass = 'testphp';
-    $dbname = "test";
-    $mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-    if($mysqli->connect_errno ) {
-        printf("Connect failed: %s<br />", $mysqli->connect_error);
-        exit();
-    }
-    
-    // requete pour tableau
-    $sql = "SELECT * FROM todos";
-    $result = $mysqli->query($sql);
-
-    // Fermeture connexion BDD
-    $mysqli->close();
-
-    // Traitement du formulaire
-    // = vérification des données
-    // = insertion en BDD
-    dd($_REQUEST);
-
+    include_once("classes/HomePage.php");
+    $p = new HomePage();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +13,17 @@
     <style>
         .row-form {
             margin-bottom: 10px;
+        }
+        .modale {
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            right: 200px;
+            bottom: 200px;
+            border: 2px solid red;
+            text-align: center;
+            background-color: white;
+            display: none;
         }
     </style>
 </head>
@@ -99,15 +79,10 @@
             </tr>
         </thead>
         <tbody>
-            <?php
-            
-                // mysqli_free_result($result);
-            ?>
-
-            <?php if ($result->num_rows > 0): ?>
-                <?php while($row = $result->fetch_assoc()): ?>
+            <?php if ($p->result->num_rows > 0): ?>
+                <?php while($row = $p->result->fetch_assoc()): ?>
                     <tr>
-                        <td><?php echo($row["id"]); ?></td>
+                        <td class="id"><?php echo($row["id"]); ?></td>
                         <td><?php echo($row["name"]); ?></td>
                         <td><?php echo($row["description"]); ?></td>
                         <td><?php echo($row["state"]); ?></td>
@@ -115,12 +90,35 @@
                         <td><?php echo($row["deadline"]); ?></td>
                         <td>
                             <button>Modifier</button>
-                            <button>Supprimer</button>
+                            <button class="delete">Supprimer</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
             <?php endif; ?>
         </tbody>
     </table>
+    <div class="modale">
+        <h3>Etes vous sur de vouloir supprimer la ligne ?</h3>
+        <form action="" method="POST">
+            <input id="delete_line" type="hidden" name="delete_line" value="toto">
+            <button type="submit">Oui</button>
+            <button class="close_modale">Non</button>
+        </form>
+    </div>
+    <script>
+        const deletes = document.querySelectorAll(".delete");
+        deletes.forEach(function(del){
+            del.addEventListener('click', function(event){
+                document.querySelector(".modale").style.display = "block";
+                let id = del.parentNode.parentNode.querySelector(".id").innerText;
+                document.querySelector("#delete_line").value = id;
+            })
+        })
+        const close_modale = document.querySelector(".close_modale");
+        close_modale.addEventListener("click", function(event){
+            event.preventDefault(); 
+            document.querySelector(".modale").style.display = "none";
+        })
+    </script>
 </body>
 </html>
